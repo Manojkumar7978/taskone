@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     chakra, Flex, HStack, Box, IconButton,
     VStack,
     CloseButton, Button, InputGroup, InputLeftElement,
-    Avatar,
+    useColorModeValue,
+    useDisclosure,
+    Input,
+    Heading
+} from '@chakra-ui/react';
+import { HamburgerIcon, SearchIcon } from '@chakra-ui/icons';
+import { Link } from 'react-router-dom';
+import movieContext from './context';
 
 
-} from '@chakra-ui/react/dist';
 
 const Nav = () => {
-    const bg = useColorModeValue("white", "gray.800");
+    let { setSearch } = useContext(movieContext)
+    const bg = useColorModeValue("#3EB489", "gray.800");
     const mobileNav = useDisclosure();
+
+
+
+    const handelchange = (e) => {
+        setSearch(e.target.value)
+    }
+
+
+
     return (
         <React.Fragment>
             <chakra.header
@@ -43,8 +59,9 @@ const Nav = () => {
                                     color: "inherit",
                                 }}
                                 variant="ghost"
-                                icon={<AiOutlineMenu />}
+                                icon={<HamburgerIcon />}
                                 onClick={mobileNav.onOpen}
+
                             />
                             <VStack
                                 pos="absolute"
@@ -53,9 +70,7 @@ const Nav = () => {
                                 right={0}
                                 display={mobileNav.isOpen ? "flex" : "none"}
                                 flexDirection="column"
-                                p={2}
                                 pb={4}
-                                m={2}
                                 bg={bg}
                                 spacing={3}
                                 rounded="sm"
@@ -66,97 +81,47 @@ const Nav = () => {
                                     justifySelf="self-start"
                                     onClick={mobileNav.onClose}
                                 />
-                                <Button w="full" variant="ghost" leftIcon={<AiFillHome />}>
-                                    Dashboard
-                                </Button>
-                                <Button
-                                    w="full"
-                                    variant="solid"
-                                    colorScheme="brand"
-                                    leftIcon={<AiOutlineInbox />}
-                                >
-                                    Inbox
-                                </Button>
-                                <Button
-                                    w="full"
-                                    variant="ghost"
-                                    leftIcon={<BsFillCameraVideoFill />}
-                                >
-                                    Videos
-                                </Button>
+                                <Heading size='lg' color='#E0115F' >
+                                    <Link to={'/'}>Movies</Link>
+                                </Heading>
+                                <Link to={'/favourites'} style={{ fontWeight: 'bolder', color: 'white' }}>Favourites</Link>
+                                <Link to={'/watchlist'} style={{ fontWeight: 'bolder', color: 'white' }}>Watchlist</Link>
                             </VStack>
                         </Box>
-                        <chakra.a
-                            href="/"
-                            title="Choc Home Page"
-                            display="flex"
-                            alignItems="center"
-                        >
-                            <Logo />
-                            <VisuallyHidden>Choc</VisuallyHidden>
-                        </chakra.a>
 
-                        <HStack
-                            spacing={3}
+                        <chakra.div
+                            gap={6}
                             display={{
                                 base: "none",
-                                md: "inline-flex",
+                                md: "flex",
                             }}
+                            alignItems='center'
+
                         >
-                            <Button variant="ghost" leftIcon={<AiFillHome />} size="sm">
-                                Dashboard
-                            </Button>
-                            <Button
-                                variant="solid"
-                                colorScheme="brand"
-                                leftIcon={<AiOutlineInbox />}
-                                size="sm"
-                            >
-                                Inbox
-                            </Button>
-                            <Button
-                                variant="ghost"
-                                leftIcon={<BsFillCameraVideoFill />}
-                                size="sm"
-                            >
-                                Videos
-                            </Button>
-                        </HStack>
+                            <Heading size='lg' color='#E0115F' >
+                                <Link to={'/'}>Movies</Link>
+                            </Heading>
+                            <Link to={'/favourites'} style={{ fontWeight: 'bolder', color: 'white' }}>Favourites</Link>
+                            <Link to={'/watchlist'} style={{ fontWeight: 'bolder', color: 'white' }}>Watchlist</Link>
+
+                        </chakra.div>
                     </HStack>
                     <HStack
-                        spacing={3}
+                        spacing={1}
                         display={mobileNav.isOpen ? "none" : "flex"}
                         alignItems="center"
                     >
                         <InputGroup>
                             <InputLeftElement pointerEvents="none">
-                                <AiOutlineSearch />
+                                <SearchIcon color="gray.800" />
                             </InputLeftElement>
-                            <Input type="tel" placeholder="Search..." />
+                            <Input onChange={(e) => {
+                                handelchange(e)
+                            }} color="gray.800" borderRadius='20px' bg='white' maxW='250px' type="text" placeholder="Search whatever you want" />
                         </InputGroup>
 
-                        <chakra.a
-                            p={3}
-                            color="gray.800"
-                            _dark={{
-                                color: "inherit",
-                            }}
-                            rounded="sm"
-                            _hover={{
-                                color: "gray.800",
-                                _dark: {
-                                    color: "gray.600",
-                                },
-                            }}
-                        >
-                            <AiFillBell />
-                        </chakra.a>
+                        <Button colorScheme='ghost'>Login</Button>
 
-                        <Avatar
-                            size="sm"
-                            name="Dan Abrahmov"
-                            src="https://bit.ly/dan-abramov"
-                        />
                     </HStack>
                 </Flex>
             </chakra.header>
