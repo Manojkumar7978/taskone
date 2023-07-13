@@ -12,17 +12,24 @@ import { HamburgerIcon, SearchIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 import movieContext from './context';
 
-
+import { auth, provider } from '../../src/config.js'
+import { signInWithPopup } from 'firebase/auth';
 
 const Nav = () => {
-    let { setSearch } = useContext(movieContext)
+    let { setSearch, user, setUser } = useContext(movieContext)
     const bg = useColorModeValue("#3EB489", "gray.800");
     const mobileNav = useDisclosure();
 
 
-
     const handelchange = (e) => {
         setSearch(e.target.value)
+    }
+
+    const handelclick = () => {
+        signInWithPopup(auth, provider).then((res) => {
+            setUser(res.user.email)
+            localStorage.setItem('email', res.user.email)
+        })
     }
 
 
@@ -120,7 +127,12 @@ const Nav = () => {
                             }} color="gray.800" borderRadius='20px' bg='white' maxW='250px' type="text" placeholder="Search whatever you want" />
                         </InputGroup>
 
-                        <Button colorScheme='ghost'>Login</Button>
+                        {
+                            user ? <Button onClick={() => {
+                                localStorage.removeItem('email')
+                                setUser(null)
+                            }} colorScheme='ghost'>Logout</Button> : <Button onClick={handelclick} colorScheme='ghost'>Login</Button>
+                        }
 
                     </HStack>
                 </Flex>
