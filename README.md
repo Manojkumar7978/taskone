@@ -6,6 +6,8 @@ This Movie app is a React.js web application that allows users to explore movies
 
 ## Deployed link
 
+- taskone-seven.vercel.app
+
 
 
 ## Features
