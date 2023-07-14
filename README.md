@@ -8,6 +8,9 @@ This Movie app is a React.js web application that allows users to explore movies
 
 - https://taskone-seven.vercel.app
 
+## Vedeo Demo
+[!Video Demo](https://vimeo.com/845200767/c49fa3e9be)
+
 
 
 ## Features
